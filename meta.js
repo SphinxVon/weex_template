@@ -7,9 +7,9 @@ const fs = require('fs')
 //   runLintFix,
 //   printMessage,
 // } = require('./utils')
-// const pkg = require('./package.json')
+const pkg = require('./package.json')
 
-// const templateVersion = pkg.version
+const templateVersion = pkg.version
 
 // const { addTestAnswers } = require('./scenarios')
 
@@ -19,17 +19,17 @@ module.exports = {
     // before: addTestAnswers
   },
   helpers: {
-    // if_or(v1, v2, options) {
+    if_or(v1, v2, options) {
 
-    //   if (v1 || v2) {
-    //     return options.fn(this)
-    //   }
+      if (v1 || v2) {
+        return options.fn(this)
+      }
 
-    //   return options.inverse(this)
-    // },
-    // template_version() {
-    //   return templateVersion
-    // },
+      return options.inverse(this)
+    },
+    template_version() {
+      return templateVersion
+    },
   },
   
   prompts: {
