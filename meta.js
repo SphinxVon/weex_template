@@ -1,17 +1,17 @@
 const path = require('path')
 const fs = require('fs')
 
-// const {
-//   sortDependencies,
-//   installDependencies,
-//   runLintFix,
-//   printMessage,
-// } = require('./utils')
+const {
+  sortDependencies,
+  installDependencies,
+  runLintFix,
+  printMessage,
+} = require('./utils')
 const pkg = require('./package.json')
 
 const templateVersion = pkg.version
 
-// const { addTestAnswers } = require('./scenarios')
+const { addTestAnswers } = require('./scenarios')
 
 module.exports = {
   metalsmith: {
@@ -33,12 +33,12 @@ module.exports = {
   },
   
   prompts: {
-    name: {
-      when: 'isNotTest',
-      type: 'string',
-      required: true,
-      message: 'Project name',
-    },
+    // name: {
+    //   when: 'isNotTest',
+    //   type: 'string',
+    //   required: true,
+    //   message: 'Project name',
+    // },
     // description: {
     //   when: 'isNotTest',
     //   type: 'string',
