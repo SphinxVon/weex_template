@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "npm run serve",
-    "build": "webpack --env.NODE_ENV=common",
+    "build": "webpack --env.NODE_ENV=production",
     "build:prod": "webpack --env.NODE_ENV=production",
     "build:test": "webpack --env.NODE_ENV=test",
     "build:prod:web": "webpack --env.NODE_ENV=release",
