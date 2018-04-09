@@ -6,6 +6,10 @@ const webpack = require('webpack');
 const config = require('./config');
 const helper = require('./helper');
 
+process.env.cdnUrl = 'https://ali-hk-cdn.nihaotalk.com/webpack_test/';//阿里云上传路径
+commonConfig[1]['output']['publicPath'] = process.env.cdnUrl;
+const AliyunOSSPlugin = require("aliyun-oss-webpack-plugin");//阿里云上传插件
+const customWeexConfig  = require("./customWeexConfig.js");//自定义插件
 /**
  * Webpack Plugins
  */
@@ -28,6 +32,13 @@ const weexConfig = webpackMerge(commonConfig[1], {
        *
        * See: https://www.npmjs.com/package/webpack-uglify-parallel
        */
+      new customWeexConfig(),//自定义插件
+      new AliyunOSSPlugin({//阿里云上传插件
+          accessKeyId: 'ULuE3LK66Y6ZlEWS',
+          accessKeySecret: 'JTFyxX7TW9K1TSVMwglj272CxfvwUC',
+          region: 'oss-cn-hongkong',
+          bucket: 'ht-blog'
+      }),
       new UglifyJsparallelPlugin({
         workers: os.cpus().length,
         mangle: true,
@@ -116,4 +127,5 @@ const webConfig = webpackMerge(commonConfig[0], {
   ]
 });
 
-module.exports = [weexConfig, webConfig]
+module.exports = [weexConfig]
+// module.exports = [weexConfig, webConfig]
