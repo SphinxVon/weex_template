@@ -51,7 +51,7 @@ customWeexConfig.prototype.apply = function (compiler) {//插件工作钩子
       let pageMapObj = {};//保存页面与url映射数据
       fs.readdirSync(pathTo.join(__dirname, '/../src', 'page')).forEach(function(file) {//读取page下面的所有文件夹
         if (/\.vue$/g.test(file)) {
-          let pageUrl = cdnUrl+'/page/'+file.split('.vue')[0]+'.js';//拼接成上传的路径
+          let pageUrl = cdnUrl+'page/'+file.split('.vue')[0]+'.js';//拼接成上传的路径
           let stringifyStr = pageUrl;
           // 如果不需要加密请注释以下代码
           let token = random_string(16);//生成token

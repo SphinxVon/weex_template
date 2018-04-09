@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const config = require('./config');
 const helper = require('./helper');
 
-process.env.cdnUrl = 'https://ali-hk-cdn.nihaotalk.com/webpack_test/';//阿里云上传路径
+process.env.cdnUrl = '';//阿里云上传路径
 commonConfig[1]['output']['publicPath'] = process.env.cdnUrl;
 const AliyunOSSPlugin = require("aliyun-oss-webpack-plugin");//阿里云上传插件
 const customWeexConfig  = require("./customWeexConfig.js");//自定义插件
@@ -34,10 +34,10 @@ const weexConfig = webpackMerge(commonConfig[1], {
        */
       new customWeexConfig(),//自定义插件
       new AliyunOSSPlugin({//阿里云上传插件
-          accessKeyId: 'ULuE3LK66Y6ZlEWS',
-          accessKeySecret: 'JTFyxX7TW9K1TSVMwglj272CxfvwUC',
-          region: 'oss-cn-hongkong',
-          bucket: 'ht-blog'
+          accessKeyId: '',
+          accessKeySecret: '',
+          region: '',
+          bucket: ''
       }),
       new UglifyJsparallelPlugin({
         workers: os.cpus().length,

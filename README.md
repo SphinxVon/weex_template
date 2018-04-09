@@ -1,66 +1,44 @@
-# vue-webpack-boilerplate
+# weex-project-boilerplate
 
-> A full-featured Webpack setup with hot-reload, lint-on-save, unit testing & css extraction.
+> 这是一套自定义的weex项目模板，已fork在vue-cli的分支上，可通过vue init varSmallRookie/weex-template <name>进行安装
 
-> This template is Vue 2.0 compatible. For Vue 1.x use this command: `vue init webpack#1.0 my-project`
+``` 
+vue init varSmallRookie/weex-template <name>
+cd <name>
+npm install or yarn
+npm run start
+```
 
 ## Documentation
 
-- [For this template](http://vuejs-templates.github.io/webpack): common questions specific to this template are answered and each part is described in greater detail
-- [For Vue 2.0](http://vuejs.org/guide/): general information about how to work with Vue, not specific to this template
+- 项目本身已设置为每一个weex页面生成一个bundlejs文件，即page文件下的.vue文件
+- 项目已配置prod与test环境，项目初始化后应首先配置webpack.prod.conf.js与webpack.test.conf.js中的阿里云cdn配置信息
 
-## Usage
-
-This is a project template for [vue-cli](https://github.com/vuejs/vue-cli). **It is recommended to use npm 3+ for a more efficient dependency tree.**
-
-``` bash
-$ npm install -g vue-cli
-$ vue init webpack my-project
-$ cd my-project
-$ npm install
-$ npm run dev
+``` 
+process.env.cdnUrl = '';//阿里云上传路径
+...
+new AliyunOSSPlugin({//阿里云上传插件
+    accessKeyId: '',
+    accessKeySecret: '',
+    region: '',
+    bucket: ''
+}),
 ```
 
-This will scaffold the project using the `master` branch. If you wish to use the latest version of the webpack template, do the following instead:
+将在打包过程中配合webapck插件自动将bundlejs进行上传
+-项目默认不产生web的相关代码，如需打开，请将webpack.prod.conf.js与webpack.test.conf.js的导出方式改为如下
 
-``` bash
-$ vue init webpack#develop my-project
+``` 
+module.exports = [weexConfig, webConfig]
 ```
 
-:warning: **The develop branch is not considered stable and can contain bugs or not build at all, so use at your own risk.**
+:warning: 打包后的页面对应的url将写入在src/pageMap.js中，而且进行了加密，如需取消加密，请将customWeexConfig.js中的如下代码注释
 
-The development server will run on port 8080 by default. If that port is already in use on your machine, the next free port will be used.
 
-## What's Included
-
-- `npm run dev`: first-in-class development experience.
-  - Webpack + `vue-loader` for single file Vue components.
-  - State preserving hot-reload
-  - State preserving compilation error overlay
-  - Lint-on-save with ESLint
-  - Source maps
-
-- `npm run build`: Production ready build.
-  - JavaScript minified with [UglifyJS v3](https://github.com/mishoo/UglifyJS2/tree/harmony).
-  - HTML minified with [html-minifier](https://github.com/kangax/html-minifier).
-  - CSS across all components extracted into a single file and minified with [cssnano](https://github.com/ben-eb/cssnano).
-  - Static assets compiled with version hashes for efficient long-term caching, and an auto-generated production `index.html` with proper URLs to these generated assets.
-  - Use `npm run build --report`to build with bundle size analytics.
-
-- `npm run unit`: Unit tests run in [JSDOM](https://github.com/tmpvar/jsdom) with [Jest](https://facebook.github.io/jest/), or in PhantomJS with Karma + Mocha + karma-webpack.
-  - Supports ES2015+ in test files.
-  - Easy mocking.
-
-- `npm run e2e`: End-to-end tests with [Nightwatch](http://nightwatchjs.org/).
-  - Run tests in multiple browsers in parallel.
-  - Works with one command out of the box:
-    - Selenium and chromedriver dependencies automatically handled.
-    - Automatically spawns the Selenium server.
-
-### Fork It And Make Your Own
-
-You can fork this repo to create your own boilerplate, and use it with `vue-cli`:
-
-``` bash
-vue init username/repo my-project
+``` 
+// 如果不需要加密请注释以下代码
+let token = random_string(16);//生成token
+stringifyStr = xtea.xTEAEncryptWithKey(pageUrl, token);//进行加密
+stringifyStr = toBuffer(stringifyStr);//将arrayBuffer转为Buffer
+stringifyStr = new Buffer(token).toString('hex')+stringifyStr.toString('hex');//提取值
 ```
