@@ -9,6 +9,7 @@ const hasPluginInstalled = fs.existsSync(helper.rootNode(config.pluginFilePath))
 const isWin = /^win/.test(process.platform);
 const webEntry = {};
 const weexEntry = {};
+process.env.token = random_string(16);
 
 // Wraping the entry file for web.
 const getEntryFileContent = (entryPath, vueFilePath) => {
@@ -86,7 +87,7 @@ const webConfig = {
   }),
   output: {
     path: helper.rootNode('./dist'),
-    filename: '[name].web.js'
+    filename: `[name]_${process.env.token}.web.js`
   },
   /**
    * Options affecting the resolving of modules.
@@ -162,7 +163,7 @@ const weexConfig = {
   entry: weexEntry,
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: '[name].js'
+    filename: `[name]_${process.env.token}.js`
   },
   /**
    * Options affecting the resolving of modules.
@@ -210,5 +211,16 @@ const weexConfig = {
   */
   node: config.nodeConfiguration
 };
+
+function random_string(len) {//生成任意字符
+　len = len || 32;
+　var chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+　var maxPos = chars.length;
+　var pwd = '';
+　for (var i = 0; i < len; i++) {
+  　pwd += chars.charAt(Math.floor(Math.random() * maxPos));
+  }
+  return pwd;
+}
 
 module.exports = [webConfig, weexConfig];
