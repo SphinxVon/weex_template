@@ -31,7 +31,7 @@ const postMessageToOpenPage =  (entry) => {
     openpage += `?page=index.js`;
   }
   else {
-    openpage += `?page=${entrys[0]}.js`;
+    openpage += `?page=${entrys[0]}_${process.env.token}.js`;
   }
   if(entrys.length > 1) {
     openpage += `&entrys=${entrys.join('|')}`
@@ -51,7 +51,7 @@ const generateHtmlWebpackPlugin = (entry) => {
   entrys = entrys.filter(entry => entry !== 'vendor' );
   const htmlPlugin = entrys.map(name => {
     return new HtmlWebpackPlugin({
-      filename: name + '.html',
+      filename: `${name}_${process.env.token}.html`,
       template: helper.rootNode(`web/index.html`),
       isDevServer: true,
       chunksSortMode: 'dependency',
