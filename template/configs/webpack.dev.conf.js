@@ -27,11 +27,12 @@ const postMessageToOpenPage =  (entry) => {
   let openpage = config.dev.openPage;
   // exclude vendor entry.
   entrys = entrys.filter(entry => entry !== 'vendor' );
+  entrys = entrys.map(item=>`${item}_${process.env.token}`);
   if(entrys.indexOf('index') > -1) {
     openpage += `?page=index.js`;
   }
   else {
-    openpage += `?page=${entrys[0]}_${process.env.token}.js`;
+    openpage += `?page=${entrys[0]}.js`;
   }
   if(entrys.length > 1) {
     openpage += `&entrys=${entrys.join('|')}`
