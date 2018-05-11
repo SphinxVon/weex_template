@@ -57,7 +57,6 @@ const config = {
                 window.phantomLimb.stop()
               }
             }
-            document.getElementsByTagName('html')[0].style.fontSize='150px';
           })
         </script>
         `
